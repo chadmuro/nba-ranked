@@ -6,7 +6,7 @@ export default async function Home() {
   const games = await fetchQuery(api.games.getGameData);
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-start p-24">
+    <main className="flex flex-1 flex-col items-center justify-start p-4 w-full max-w-screen-xl">
       <GameContent games={games} />
     </main>
   );

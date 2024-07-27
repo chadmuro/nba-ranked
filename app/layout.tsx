@@ -27,7 +27,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <ConvexClientProvider>
-          <div className="flex min-h-screen flex-col">
+          <div className="flex min-h-screen flex-col items-center">
             <Header />
             {children}
             <footer className="self-center">Chad Murobayashi 2024</footer>

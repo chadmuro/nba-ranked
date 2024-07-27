@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-
 import { mapStatType } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
+import PlayerCards from "./player-cards";
+import { Button } from "./ui/button";
 
 interface Props {
   games: any;
@@ -33,24 +33,8 @@ export default function GameContent({ games }: Props) {
         Sort these players in order of their {mapStatType(today.stat)} from the{" "}
         {today.season - 1}-{today.season} season.
       </h3>
-      <div className="flex flex-row justify-between">
-        {data?.map((player: any) => {
-          return (
-            <div key={player.index}>
-              <p>{player.playerName}</p>
-              <p>{player.playerStat}</p>
-              {player.playerImageSrc !== undefined ? (
-                <Image
-                  src={player.playerImageSrc}
-                  alt={player.playerName}
-                  height={450}
-                  width={300}
-                />
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
+      <PlayerCards data={data} />
+      <Button>Submit</Button>
     </>
   );
 }
