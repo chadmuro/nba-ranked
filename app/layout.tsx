@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
+import { cn } from "@/lib/utils";
+import Header from "@/components/header";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "NBA, Ranked - Daily NBA Game",
@@ -17,16 +19,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          inter.variable
+        )}
+        suppressHydrationWarning={true}
+      >
         <ConvexClientProvider>
           <div className="flex min-h-screen flex-col">
-            <header className="self-end">
-              <button>How to play</button>
-              <button>Settings</button>
-              <select>
-                <option>2024-07-26</option>
-              </select>
-            </header>
+            <Header />
             {children}
             <footer className="self-center">Chad Murobayashi 2024</footer>
           </div>

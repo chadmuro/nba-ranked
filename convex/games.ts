@@ -9,6 +9,7 @@ export const getGameData = query({
     return await ctx.db
       .query("games")
       .filter((q) => q.lte(q.field("date"), todaysDate))
+      .order("desc")
       .take(365);
   },
 });
