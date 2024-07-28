@@ -86,7 +86,7 @@ export default async function handler(
       }
     }
 
-    await fetch("https://useful-cricket-539.convex.site/postGameData", {
+    await fetch(`${process.env.CONVEX_SITE_URL}/postGameData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
