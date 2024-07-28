@@ -4,9 +4,15 @@ import { useIsMobile } from "@/hooks/useMobile";
 
 interface Props {
   player: any;
+  onReorderWithPositionLock: () => void;
+  dragLock: boolean;
 }
 
-export default function PlayerCard({ player }: Props) {
+export default function PlayerCard({
+  player,
+  onReorderWithPositionLock,
+  dragLock,
+}: Props) {
   const isMobile = useIsMobile();
 
   return (
@@ -14,6 +20,8 @@ export default function PlayerCard({ player }: Props) {
       key={player.index}
       value={player}
       className="flex flex-row sm:flex-col cursor-grab active:cursor-grabbing"
+      onDragEnd={onReorderWithPositionLock}
+      dragListener={dragLock}
     >
       {player.playerImageSrc !== undefined ? (
         <Image

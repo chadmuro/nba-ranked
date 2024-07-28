@@ -25,8 +25,6 @@ export function DateSelect({ games }: Props) {
     router.replace(newUrl);
   }
 
-  console.log(searchParams?.get("date"));
-
   return (
     <Select onValueChange={onChange} value={searchParams?.get("date") || ""}>
       <SelectTrigger className="w-[350px]">

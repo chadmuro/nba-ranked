@@ -22,6 +22,5 @@ export const useIsMobile = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  console.log(isMobile);
   return isMobile;
 };

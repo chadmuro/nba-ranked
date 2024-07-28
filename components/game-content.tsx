@@ -3,7 +3,6 @@
 import { mapStatType } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
 import PlayerCards from "./player-cards";
-import { Button } from "./ui/button";
 
 interface Props {
   games: any;
@@ -34,7 +33,6 @@ export default function GameContent({ games }: Props) {
         {today.season - 1}-{today.season} season.
       </h3>
       <PlayerCards data={data} />
-      <Button>Submit</Button>
     </>
   );
 }
