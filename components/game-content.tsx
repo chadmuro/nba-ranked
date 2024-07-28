@@ -26,7 +26,7 @@ export default function GameContent({ games }: Props) {
 
   return (
     <>
-      <h1 className="text-4xl font-bold">Today's Game</h1>
+      <h1 className="text-4xl font-bold">Today&apos;s Game</h1>
       <h2>{today.date}</h2>
       <h3>
         Sort these players in order of their {mapStatType(today.stat)} from the{" "}
