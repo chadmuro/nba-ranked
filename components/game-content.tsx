@@ -26,12 +26,13 @@ export default function GameContent({ games }: Props) {
 
   return (
     <>
-      <h1 className="text-4xl font-bold">Today&apos;s Game</h1>
-      <h2>{today.date}</h2>
-      <h3>
+      <h1 className="text-4xl font-bold">NBA, Ranked</h1>
+      <h2 className="text-3xl font-bold">Today&apos;s Game</h2>
+      <h3>{today.date}</h3>
+      <h4>
         Sort these players in order of their {mapStatType(today.stat)} from the{" "}
         {today.season - 1}-{today.season} season.
-      </h3>
+      </h4>
       <PlayerCards data={data} />
     </>
   );

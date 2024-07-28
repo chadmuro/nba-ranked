@@ -86,7 +86,7 @@ export default function PlayerCards({ data }: Props) {
 
   return (
     <>
-      <div className="flex flex-row sm:flex-col w-full gap-4">
+      <div className="flex flex-row sm:flex-col w-full gap-4 py-4">
         <div className="flex flex-col sm:flex-row gap-4 justify-around">
           {sortedPlayers.map((player: any, index) => {
             return (
