@@ -14,6 +14,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
+  const authHeader = req.headers["authorization"];
+  if (
+    !process.env.CRON_SECRET ||
+    authHeader !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return res.status(401).json({ data: [] });
+  }
+
   const season = getRandomYear();
   const statType = getRandomStatTypeUrl();
   const statTypeUrl = statType.statTypeUrl;
@@ -86,13 +94,17 @@ export default async function handler(
       }
     }
 
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1);
+    const date = currentDate.toISOString().split("T")[0];
+
     await fetch(`${process.env.CONVEX_SITE_URL}/postGameData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        date: new Date().toISOString().split("T")[0],
+        date,
         data: JSON.stringify(gamePlayerData),
         season: season.toString(),
         stat: rowRef,
