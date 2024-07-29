@@ -30,7 +30,7 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col items-center">
             <Header />
             {children}
-            <footer className="self-center">Chad Murobayashi 2024</footer>
+            <footer className="self-center py-4">Chad Murobayashi 2024</footer>
           </div>
         </ConvexClientProvider>
       </body>
