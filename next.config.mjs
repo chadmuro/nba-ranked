@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['www.basketball-reference.com'],
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'www.basketball-reference.com',
+      port: '',
+    },],
   }
 };
 

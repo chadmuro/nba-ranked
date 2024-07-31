@@ -27,7 +27,7 @@ export default function PlayerCard({
         <Image
           src={player.playerImageSrc}
           alt={player.playerName}
-          height={300}
+          height={isMobile ? 90 : 300}
           width={isMobile ? 60 : 250}
           className="pointer-events-none"
         />
