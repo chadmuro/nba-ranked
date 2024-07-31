@@ -28,7 +28,7 @@ export default function PlayerCard({
           src={player.playerImageSrc}
           alt={player.playerName}
           height={300}
-          width={isMobile ? 80 : 250}
+          width={isMobile ? 60 : 250}
           className="pointer-events-none"
         />
       ) : null}
