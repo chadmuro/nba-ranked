@@ -4,13 +4,22 @@ import PlayerCard from "./player-card";
 import { useSearchParams } from "next/navigation";
 import { useIsMobile } from "@/hooks/useMobile";
 import { Button } from "./ui/button";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface Props {
   data: any;
+  date: string;
 }
 
-export default function PlayerCards({ data }: Props) {
-  const [players, setPlayers] = useState(data);
+export default function PlayerCards({ data, date }: Props) {
+  const [gameData, setGameData] = useLocalStorage("game_data", {
+    [date]: { players: data, guessCount: 0 },
+  });
+
+  const [players, setPlayers] = useState(
+    gameData[date] ? gameData[date].players : data
+  );
+
   const [correctPositions, setCorrectPositions] = useState<number[]>([]);
   const [wrongPositions, setWrongPositions] = useState<number[]>([]);
   const [oneOffPositions, setOneOffPositions] = useState<number[]>([]);
@@ -18,25 +27,45 @@ export default function PlayerCards({ data }: Props) {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    setPlayers(data);
-    setCorrectPositions([]);
-    setWrongPositions([]);
-    setOneOffPositions([]);
+    const savedGameData = JSON.parse(localStorage.getItem("game_data") || "[]");
+    const savedPlayersData = savedGameData[date]?.players;
+
+    if (savedPlayersData?.length) {
+      setPlayers(savedPlayersData);
+    } else {
+      setPlayers(data);
+    }
+
+    const savedGuessCount = savedGameData[date]?.guessCount;
+
+    if (savedGuessCount > 0) {
+      const sortedPlayers = [...savedPlayersData].sort(
+        (a: any, b: any) => b.playerStat - a.playerStat
+      );
+      onSubmit(false, savedPlayersData, sortedPlayers);
+    } else {
+      setCorrectPositions([]);
+      setWrongPositions([]);
+      setOneOffPositions([]);
+    }
   }, [searchParams]);
 
-  // Sort players by player.stat
   const sortedPlayers = [...players].sort(
     (a: any, b: any) => b.playerStat - a.playerStat
   );
 
-  function onSubmit() {
+  function onSubmit(
+    updateGuessCount = false,
+    passedPlayersData = players,
+    passedSortedPlayers = sortedPlayers
+  ) {
     const correct: number[] = [];
     const wrong: number[] = [];
     const oneOff: number[] = [];
 
-    players.forEach((player: any, index: number) => {
-      const sortedIndex = sortedPlayers.findIndex(
-        (sortedPlayer) => sortedPlayer.index === player.index
+    passedPlayersData.forEach((player: any, index: number) => {
+      const sortedIndex = passedSortedPlayers.findIndex(
+        (sortedPlayer: any) => sortedPlayer.index === player.index
       );
 
       if (index === sortedIndex) {
@@ -51,10 +80,27 @@ export default function PlayerCards({ data }: Props) {
     setCorrectPositions(correct);
     setOneOffPositions(oneOff);
     setWrongPositions(wrong);
+
+    if (updateGuessCount) {
+      setGameData({
+        ...gameData,
+        [date]: {
+          players: passedPlayersData,
+          guessCount: gameData[date] ? gameData[date].guessCount + 1 : 1,
+        },
+      });
+    }
   }
 
   function onReorderWithPositionLock() {
     if (correctPositions.length === 0) {
+      setGameData({
+        ...gameData,
+        [date]: {
+          players,
+          guessCount: gameData[date]?.guessCount ?? 0,
+        },
+      });
       return setPlayers(players);
     }
 
@@ -82,10 +128,18 @@ export default function PlayerCards({ data }: Props) {
 
     // Update the players state
     setPlayers(updatedPlayers);
+    setGameData({
+      ...gameData,
+      [date]: {
+        players: updatedPlayers,
+        guessCount: gameData[date].guessCount ?? 0,
+      },
+    });
   }
 
   return (
     <>
+      <p>Total guesses: {gameData[date]?.guessCount ?? 0}</p>
       <div className="flex flex-row sm:flex-col w-full gap-4 py-4">
         <div className="flex flex-col sm:flex-row gap-4 justify-around">
           {sortedPlayers.map((player: any, index) => {
@@ -127,7 +181,7 @@ export default function PlayerCards({ data }: Props) {
           })}
         </Reorder.Group>
       </div>
-      <Button onClick={onSubmit}>Submit</Button>
+      <Button onClick={() => onSubmit(true)}>Submit</Button>
     </>
   );
 }

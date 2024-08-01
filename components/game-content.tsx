@@ -33,7 +33,7 @@ export default function GameContent({ games }: Props) {
         Sort these players in order of their {mapStatType(today.stat)} from the{" "}
         {today.season - 1}-{today.season} season.
       </h4>
-      <PlayerCards data={data} />
+      <PlayerCards data={data} date={today.date} />
     </>
   );
 }
