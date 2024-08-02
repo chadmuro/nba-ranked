@@ -1,11 +1,11 @@
 "use client";
 
-import { mapStatType } from "@/lib/types";
+import { DailyGameData, Player, mapStatType } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
 import PlayerCards from "./player-cards";
 
 interface Props {
-  games: any;
+  games: DailyGameData[];
 }
 
 export default function GameContent({ games }: Props) {
@@ -19,7 +19,7 @@ export default function GameContent({ games }: Props) {
     return <div>No games today</div>;
   }
 
-  let data;
+  let data: Player[] = [];
   if (today.data) {
     data = JSON.parse(today.data);
   }
@@ -31,7 +31,7 @@ export default function GameContent({ games }: Props) {
       <h3>{today.date}</h3>
       <h4>
         Sort these players in order of their {mapStatType(today.stat)} from the{" "}
-        {today.season - 1}-{today.season} season.
+        {String(Number(today.season) - 1)}-{today.season} season.
       </h4>
       <PlayerCards data={data} date={today.date} />
     </>

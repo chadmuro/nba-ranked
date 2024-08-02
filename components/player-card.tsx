@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { Reorder } from "framer-motion";
 import { useIsMobile } from "@/hooks/useMobile";
+import { Player } from "@/lib/types";
 
 interface Props {
-  player: any;
+  player: Player;
   onReorderWithPositionLock: () => void;
   dragLock: boolean;
 }

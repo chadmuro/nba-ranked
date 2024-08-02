@@ -18,6 +18,13 @@ import { useState } from "react";
 export default function SettingsDialog() {
   const [hardMode, setHardMode] = useState(false);
 
+  function handleDailyReset() {
+    localStorage.removeItem("game_data");
+
+    // Refresh the page with nextjs
+    window.location.reload();
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -43,13 +50,15 @@ export default function SettingsDialog() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Label htmlFor="reset">Reset day stats</Label>
-            <Button variant="outline">Reset</Button>
+            <Label htmlFor="reset">Reset all game stats</Label>
+            <Button onClick={handleDailyReset} variant="destructive">
+              Reset
+            </Button>
           </div>
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Close</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

@@ -5,9 +5,10 @@ import { useSearchParams } from "next/navigation";
 import { useIsMobile } from "@/hooks/useMobile";
 import { Button } from "./ui/button";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { Player } from "@/lib/types";
 
 interface Props {
-  data: any;
+  data: Player[];
   date: string;
 }
 

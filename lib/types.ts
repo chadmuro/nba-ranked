@@ -24,3 +24,18 @@ export function mapStatType(statType: StatType): string {
 // show stats
 // show answer placement (only correct answers)
 // show answer placement (one away hint)
+
+export type DailyGameData = {
+  _id: string;
+  data: string;
+  date: string;
+  season: string;
+  stat: StatType;
+};
+
+export type Player = {
+  index: number;
+  playerName: string;
+  playerStat: string;
+  playerImageSrc: string;
+};
