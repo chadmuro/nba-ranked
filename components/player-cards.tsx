@@ -94,13 +94,6 @@ export default function PlayerCards({ data, date }: Props) {
 
   function onReorderWithPositionLock() {
     if (correctPositions.length === 0) {
-      setGameData({
-        ...gameData,
-        [date]: {
-          players,
-          guessCount: gameData[date]?.guessCount ?? 0,
-        },
-      });
       return setPlayers(players);
     }
 
@@ -128,13 +121,6 @@ export default function PlayerCards({ data, date }: Props) {
 
     // Update the players state
     setPlayers(updatedPlayers);
-    setGameData({
-      ...gameData,
-      [date]: {
-        players: updatedPlayers,
-        guessCount: gameData[date].guessCount ?? 0,
-      },
-    });
   }
 
   return (
@@ -181,7 +167,12 @@ export default function PlayerCards({ data, date }: Props) {
           })}
         </Reorder.Group>
       </div>
-      <Button onClick={() => onSubmit(true)}>Submit</Button>
+      <Button
+        disabled={correctPositions.length === 6}
+        onClick={() => onSubmit(true)}
+      >
+        Submit
+      </Button>
     </>
   );
 }
