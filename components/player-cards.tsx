@@ -16,12 +16,16 @@ export default function PlayerCards({ data, date }: Props) {
   const [gameData, setGameData] = useLocalStorage("game_data", {
     [date]: { players: data, guessCount: 0 },
   });
+  const [gameSettings, setGameSettings] = useLocalStorage("game_settings", {});
 
   const [players, setPlayers] = useState(
     gameData[date] ? gameData[date].players : data
   );
 
+  // uses player.index
   const [correctPositions, setCorrectPositions] = useState<number[]>([]);
+
+  // uses index of sorted player
   const [wrongPositions, setWrongPositions] = useState<number[]>([]);
   const [oneOffPositions, setOneOffPositions] = useState<number[]>([]);
   const searchParams = useSearchParams();
@@ -72,9 +76,9 @@ export default function PlayerCards({ data, date }: Props) {
       if (index === sortedIndex) {
         correct.push(player.index);
       } else if (Math.abs(index - sortedIndex) === 1) {
-        oneOff.push(player.index);
+        oneOff.push(index);
       } else {
-        wrong.push(player.index);
+        wrong.push(index);
       }
     });
 
@@ -94,7 +98,7 @@ export default function PlayerCards({ data, date }: Props) {
   }
 
   function onReorderWithPositionLock() {
-    if (correctPositions.length === 0) {
+    if (correctPositions.length === 0 || gameSettings.hardMode) {
       return;
     }
 
@@ -151,6 +155,9 @@ export default function PlayerCards({ data, date }: Props) {
   return (
     <>
       <p>Total guesses: {gameData[date]?.guessCount ?? 0}</p>
+      {gameSettings.hardMode && (
+        <p>Players in correct rank: {correctPositions.length}</p>
+      )}
       <div className="flex flex-row sm:flex-col w-full gap-4 py-4">
         <div className="flex flex-col sm:flex-row gap-4 justify-around">
           {sortedPlayers.map((player: any, index) => {
@@ -158,14 +165,15 @@ export default function PlayerCards({ data, date }: Props) {
               <div
                 key={player.index}
                 className={`flex flex-col items-center w-full px-4 flex-1 ${
-                  correctPositions.includes(player.index)
+                  !gameSettings.hardMode &&
+                  (correctPositions.includes(player.index)
                     ? "bg-green-500"
-                    : oneOffPositions.includes(player.index)
+                    : oneOffPositions.includes(index)
                       ? "bg-yellow-500"
-                      : wrongPositions.includes(player.index)
+                      : wrongPositions.includes(index)
                         ? "bg-red-500"
-                        : ""
-                }`}
+                        : "")
+                } ${correctPositions.length === 6 ? "bg-green-500" : ""}`}
               >
                 <p>#{index + 1}</p>
                 <p>{player.playerStat}</p>
@@ -186,7 +194,10 @@ export default function PlayerCards({ data, date }: Props) {
                 key={player.index}
                 player={player}
                 onReorderWithPositionLock={onReorderWithPositionLock}
-                dragLock={!correctPositions.includes(player.index)}
+                dragLock={
+                  !correctPositions.includes(player.index) ||
+                  gameSettings.hardMode
+                }
               />
             );
           })}

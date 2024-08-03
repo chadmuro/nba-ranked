@@ -13,10 +13,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Switch } from "./ui/switch";
-import { useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export default function SettingsDialog() {
-  const [hardMode, setHardMode] = useState(false);
+  const [gameSettings, setGameSettings] = useLocalStorage("game_settings", {
+    hardMode: false,
+  });
 
   function handleDailyReset() {
     localStorage.removeItem("game_data");
@@ -33,19 +35,25 @@ export default function SettingsDialog() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
-          <DialogDescription>
+          {/* <DialogDescription>
             Make changes to how you want to play the game
-          </DialogDescription>
+          </DialogDescription> */}
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div>
             <div className="flex items-center gap-4">
               <Label htmlFor="hard_mode">Hard mode 🔥</Label>
-              <Switch checked={hardMode} onCheckedChange={setHardMode} />
+              <Switch
+                checked={gameSettings.hardMode}
+                onCheckedChange={() => {
+                  setGameSettings({ hardMode: !gameSettings.hardMode });
+                  window.location.reload();
+                }}
+              />
             </div>
             <p className="text-sm font-extralight">
               After submitting your answer, you will only be shown the number of
-              players in the correct position.
+              players in the correct rank.
             </p>
           </div>
 

@@ -19,7 +19,7 @@ export default function InstructionsDialog() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>How to play</DialogTitle>
-          <DialogDescription>Learn how to play NBA, Ranked</DialogDescription>
+          {/* <DialogDescription>Learn how to play NBA, Ranked</DialogDescription> */}
         </DialogHeader>
 
         <DialogFooter>
