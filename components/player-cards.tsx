@@ -70,11 +70,11 @@ export default function PlayerCards({ data, date }: Props) {
       );
 
       if (index === sortedIndex) {
-        correct.push(index);
+        correct.push(player.index);
       } else if (Math.abs(index - sortedIndex) === 1) {
-        oneOff.push(index);
+        oneOff.push(player.index);
       } else {
-        wrong.push(index);
+        wrong.push(player.index);
       }
     });
 
@@ -95,26 +95,50 @@ export default function PlayerCards({ data, date }: Props) {
 
   function onReorderWithPositionLock() {
     if (correctPositions.length === 0) {
-      return setPlayers(players);
+      return;
     }
 
     let updatedPlayers = [...players];
 
     // iterate over the correctPositions array
-    correctPositions.forEach((correctPosition) => {
-      // check if the correctPosition is within the bounds of the array
-      if (correctPosition < 0 || correctPosition >= sortedPlayers.length) {
-        console.error(`Position ${correctPosition} is out of bounds`);
+    correctPositions.forEach((playerIndex) => {
+      // find the player with the correct index in the sortedPlayers array
+      const sortedPlayer = sortedPlayers.find(
+        (player) => player.index === playerIndex
+      );
+
+      if (!sortedPlayer) {
+        console.error(`No player found with index ${playerIndex}`);
         return;
       }
-
-      // get the player from the sortedPlayers array
-      const sortedPlayer = sortedPlayers[correctPosition];
 
       // remove the player from the updatedPlayers array
       updatedPlayers = updatedPlayers.filter(
         (player) => player.index !== sortedPlayer.index
       );
+    });
+
+    correctPositions.forEach((playerIndex) => {
+      const sortedPlayer = sortedPlayers.find(
+        (player) => player.index === playerIndex
+      );
+
+      if (!sortedPlayer) {
+        console.error(`No player found with index ${playerIndex}`);
+        return;
+      }
+
+      // find the position of the player in the updatedPlayers array
+      const correctPosition = sortedPlayers.findIndex(
+        (player: any) => player.index === playerIndex
+      );
+
+      if (correctPosition === -1) {
+        console.error(
+          `No player found with index ${playerIndex} in the players array`
+        );
+        return;
+      }
 
       // add sorted player to the correct position
       updatedPlayers.splice(correctPosition, 0, sortedPlayer);
@@ -134,11 +158,11 @@ export default function PlayerCards({ data, date }: Props) {
               <div
                 key={player.index}
                 className={`flex flex-col items-center w-full px-4 flex-1 ${
-                  correctPositions.includes(index)
+                  correctPositions.includes(player.index)
                     ? "bg-green-500"
-                    : oneOffPositions.includes(index)
+                    : oneOffPositions.includes(player.index)
                       ? "bg-yellow-500"
-                      : wrongPositions.includes(index)
+                      : wrongPositions.includes(player.index)
                         ? "bg-red-500"
                         : ""
                 }`}
@@ -162,7 +186,7 @@ export default function PlayerCards({ data, date }: Props) {
                 key={player.index}
                 player={player}
                 onReorderWithPositionLock={onReorderWithPositionLock}
-                dragLock={!correctPositions.includes(index)}
+                dragLock={!correctPositions.includes(player.index)}
               />
             );
           })}

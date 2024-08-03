@@ -49,11 +49,20 @@ export default function SettingsDialog() {
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
-            <Label htmlFor="reset">Reset all game stats</Label>
-            <Button onClick={handleDailyReset} variant="destructive">
-              Reset
-            </Button>
+          <div>
+            <div className="flex items-center gap-4">
+              <Label htmlFor="reset">Reset all game stats</Label>
+              <Button
+                onClick={handleDailyReset}
+                size="sm"
+                variant="destructive"
+              >
+                Reset
+              </Button>
+            </div>
+            <p className="text-sm font-extralight">
+              This will reset the game stats for all days.
+            </p>
           </div>
         </div>
         <DialogFooter>
