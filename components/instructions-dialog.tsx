@@ -28,8 +28,8 @@ export default function InstructionsDialog() {
           <div className="flex flex-col justify-center items-center py-4">
             <DialogDescription>
               After submitting your answers, green means the player is in the
-              correct position. Yellow means the player is one spot away. Red
-              means the player is more than one spot away.
+              correct rank. Yellow means the player is one rank away. Red means
+              the player is more than one rank away.
             </DialogDescription>
             <Image
               src={isMobile ? "/instructions-mobile.png" : "/instructions.png"}

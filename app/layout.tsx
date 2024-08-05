@@ -30,7 +30,18 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col items-center">
             <Header />
             {children}
-            <footer className="self-center py-4">Chad Murobayashi 2024</footer>
+            <footer className="self-center py-4">
+              ©{" "}
+              <a
+                href="https://www.chadmuro.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Chad Murobayashi
+              </a>{" "}
+              2024
+            </footer>
           </div>
         </ConvexClientProvider>
       </body>
