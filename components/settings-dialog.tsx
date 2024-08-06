@@ -35,9 +35,7 @@ export default function SettingsDialog() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
-          {/* <DialogDescription>
-            Make changes to how you want to play the game
-          </DialogDescription> */}
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div>
@@ -51,7 +49,7 @@ export default function SettingsDialog() {
                 }}
               />
             </div>
-            <p className="text-sm font-extralight">
+            <p className="text-sm text-muted-foreground">
               After submitting your answer, you will only be shown the number of
               players in the correct rank.
             </p>
@@ -68,7 +66,7 @@ export default function SettingsDialog() {
                 Reset
               </Button>
             </div>
-            <p className="text-sm font-extralight">
+            <p className="text-sm text-muted-foreground">
               This will reset the game stats for all days.
             </p>
           </div>

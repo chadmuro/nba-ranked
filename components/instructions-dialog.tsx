@@ -11,11 +11,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useIsMobile } from "@/hooks/useMobile";
 import Image from "next/image";
 
 export default function InstructionsDialog() {
-  const isMobile = useIsMobile();
+  const localTime = new Date();
+  localTime.setUTCHours(0, 0, 0, 0);
+  const formattedTime = localTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <Dialog>
@@ -26,16 +30,19 @@ export default function InstructionsDialog() {
         <DialogHeader>
           <DialogTitle>How to play</DialogTitle>
           <div className="flex flex-col justify-center items-center py-4">
-            <DialogDescription>
+            <DialogDescription className="text-normal">
+              New game is available every day from {formattedTime}
+            </DialogDescription>
+            <p className="text-sm text-muted-foreground py-2">
               After submitting your answers, green means the player is in the
               correct rank. Yellow means the player is one rank away. Red means
               the player is more than one rank away.
-            </DialogDescription>
+            </p>
             <Image
-              src={isMobile ? "/instructions-mobile.png" : "/instructions.png"}
+              src={"/instructions.png"}
               alt="Instructions"
-              height={isMobile ? 600 : 400}
-              width={isMobile ? 200 : 600}
+              height={200}
+              width={400}
             />
           </div>
         </DialogHeader>
