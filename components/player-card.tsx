@@ -23,6 +23,7 @@ export default function PlayerCard({
       className="flex flex-row sm:flex-col cursor-grab active:cursor-grabbing"
       onDragEnd={onReorderWithPositionLock}
       dragListener={!dragLock}
+      style={{ touchAction: "none" }}
     >
       {player.playerImageSrc !== undefined ? (
         <Image
