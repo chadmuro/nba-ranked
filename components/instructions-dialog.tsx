@@ -26,13 +26,18 @@ export default function InstructionsDialog() {
       <DialogTrigger asChild>
         <Button>How to play</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>How to play</DialogTitle>
           <div className="flex flex-col justify-center items-center py-4">
             <DialogDescription className="text-normal">
-              New game is available every day from {formattedTime}
+              New game is available every day from {formattedTime} 🏀
             </DialogDescription>
+            <p className="text-sm text-muted-foreground py-2">
+              Every day you will be presented with a list of random NBA players
+              from a single season (2000-2001 to present). You need to rank
+              these players based on the given stat from that season.
+            </p>
             <p className="text-sm text-muted-foreground py-2">
               After submitting your answers, green means the player is in the
               correct rank. Yellow means the player is one rank away. Red means
