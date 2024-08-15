@@ -1,3 +1,4 @@
+import { StatType, StatTypeUrl } from "@/lib/types";
 import * as cheerio from "cheerio";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -123,16 +124,6 @@ function getRandomYear(): number {
   return Math.floor(Math.random() * (maxYear - minYear + 1)) + minYear;
 }
 
-type StatTypeUrl =
-  | "totals.html#totals_stats::pts"
-  | "per_game.html#per_game_stats::pts_per_g"
-  | "totals.html#totals_stats::trb"
-  | "per_game.html#per_game_stats::trb_per_g"
-  | "totals.html#totals_stats::ast"
-  | "per_game.html#per_game_stats::ast_per_g";
-
-type StatType = "pts" | "pts_per_g" | "trb" | "trb_per_g" | "ast" | "ast_per_g";
-
 type StatTypeUrlWithRowRef = {
   statTypeUrl: StatTypeUrl;
   rowRef: StatType;
@@ -140,21 +131,22 @@ type StatTypeUrlWithRowRef = {
 
 function getRandomStatTypeUrl(): StatTypeUrlWithRowRef {
   const statTypeUrls: StatTypeUrlWithRowRef[] = [
-    { statTypeUrl: "totals.html#totals_stats::pts", rowRef: "pts" },
+    { statTypeUrl: StatTypeUrl.PTS, rowRef: StatType.PTS },
     {
-      statTypeUrl: "per_game.html#per_game_stats::pts_per_g",
-      rowRef: "pts_per_g",
+      statTypeUrl: StatTypeUrl.PTS_PER_G,
+      rowRef: StatType.PTS_PER_G,
     },
-    { statTypeUrl: "totals.html#totals_stats::trb", rowRef: "trb" },
+    { statTypeUrl: StatTypeUrl.TRB, rowRef: StatType.TRB },
     {
-      statTypeUrl: "per_game.html#per_game_stats::trb_per_g",
-      rowRef: "trb_per_g",
+      statTypeUrl: StatTypeUrl.TRB_PER_G,
+      rowRef: StatType.TRB_PER_G,
     },
-    { statTypeUrl: "totals.html#totals_stats::ast", rowRef: "ast" },
+    { statTypeUrl: StatTypeUrl.AST, rowRef: StatType.AST },
     {
-      statTypeUrl: "per_game.html#per_game_stats::ast_per_g",
-      rowRef: "ast_per_g",
+      statTypeUrl: StatTypeUrl.AST_PER_G,
+      rowRef: StatType.AST_PER_G,
     },
+    { statTypeUrl: StatTypeUrl.FG3, rowRef: StatType.FG3 },
   ];
   const randomIndex = Math.floor(Math.random() * statTypeUrls.length);
   return statTypeUrls[randomIndex];
