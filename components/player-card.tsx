@@ -22,7 +22,7 @@ export default function PlayerCard({
       value={player}
       className="flex flex-row sm:flex-col cursor-grab active:cursor-grabbing"
       onDragEnd={onReorderWithPositionLock}
-      dragListener={dragLock}
+      dragListener={!dragLock}
     >
       {player.playerImageSrc !== undefined ? (
         <Image

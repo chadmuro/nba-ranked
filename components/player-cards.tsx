@@ -195,9 +195,9 @@ export default function PlayerCards({ data, date }: Props) {
                 player={player}
                 onReorderWithPositionLock={onReorderWithPositionLock}
                 dragLock={
-                  (!correctPositions.includes(player.index) ||
-                    gameSettings.hardMode) &&
-                  correctPositions.length < 6
+                  (correctPositions.includes(player.index) ||
+                    correctPositions.length === 6) &&
+                  (!gameSettings.hardMode || correctPositions.length === 6)
                 }
               />
             );
