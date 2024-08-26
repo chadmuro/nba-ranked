@@ -1,4 +1,4 @@
-import { Reorder } from "framer-motion";
+import { Reorder, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import PlayerCard from "./player-card";
 import { useSearchParams } from "next/navigation";
@@ -158,7 +158,10 @@ export default function PlayerCards({ data, date }: Props) {
       {gameSettings.hardMode && (
         <p>Players in correct rank: {correctPositions.length}</p>
       )}
-      <div className="flex flex-row sm:flex-col w-full gap-4 py-4">
+      <motion.div
+        layoutScroll={isMobile}
+        className="flex flex-row sm:flex-col w-full gap-4 py-4 overflow-auto"
+      >
         <div className="flex flex-col sm:flex-row gap-4 justify-around">
           {sortedPlayers.map((player: any, index) => {
             return (
@@ -186,7 +189,7 @@ export default function PlayerCards({ data, date }: Props) {
           axis={isMobile ? "y" : "x"}
           values={players}
           onReorder={setPlayers}
-          className="flex flex-col sm:flex-row gap-4 justify-around w-full overflow-hidden"
+          className="flex flex-col sm:flex-row gap-4 justify-around w-full"
         >
           {players.map((player: any, index: number) => {
             return (
@@ -203,7 +206,7 @@ export default function PlayerCards({ data, date }: Props) {
             );
           })}
         </Reorder.Group>
-      </div>
+      </motion.div>
       <Button
         disabled={correctPositions.length === 6}
         onClick={() => onSubmit(true)}

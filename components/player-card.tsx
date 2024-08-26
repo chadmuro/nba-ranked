@@ -20,7 +20,7 @@ export default function PlayerCard({
     <Reorder.Item
       key={player.index}
       value={player}
-      className="flex flex-row sm:flex-col cursor-grab active:cursor-grabbing"
+      className="flex flex-row sm:flex-col cursor-grab active:cursor-grabbing w-fit gap-1"
       onDragEnd={onReorderWithPositionLock}
       dragListener={!dragLock}
       style={{ touchAction: "none" }}
@@ -29,8 +29,8 @@ export default function PlayerCard({
         <Image
           src={player.playerImageSrc}
           alt={player.playerName}
-          height={isMobile ? 90 : 300}
-          width={isMobile ? 60 : 250}
+          height={!isMobile ? 300 : 60}
+          width={!isMobile ? 250 : 40}
           className="pointer-events-none"
         />
       ) : null}

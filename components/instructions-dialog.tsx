@@ -35,7 +35,7 @@ export default function InstructionsDialog() {
             </DialogDescription>
             <p className="text-sm text-muted-foreground py-2">
               Every day you will be presented with a list of random NBA players
-              from a single season (2000-2001 to present). You need to rank
+              from a single season (1999-2000 to present). You need to rank
               these players based on the given stat from that season.
             </p>
             <p className="text-sm text-muted-foreground py-2">
