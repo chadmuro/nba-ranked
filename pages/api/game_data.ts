@@ -34,7 +34,7 @@ export default async function handler(
     );
     const htmlString = await response.text();
     const $ = cheerio.load(htmlString);
-    const allRows = $("tr.full_table");
+    const allRows = $("table.stats_table tbody tr");
 
     const randomPlayerIds: number[] = [];
     const gamePlayerData: {
@@ -114,7 +114,8 @@ export default async function handler(
 
     return res.status(200).json({ data: gamePlayerData });
   } catch (e) {
-    return { error: `error: ${e}` };
+    console.error(e);
+    return res.status(500).json({ data: [] });
   }
 }
 
