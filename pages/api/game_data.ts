@@ -49,8 +49,11 @@ export default async function handler(
       let playerImageSrc;
 
       do {
-        randomIndex = Math.floor(Math.random() * allRows.length);
-      } while (randomPlayerIds.includes(randomIndex));
+        randomIndex = Math.floor(Math.random() * Math.min(allRows.length, 300));
+      } while (
+        randomPlayerIds.includes(randomIndex) ||
+        allRows.eq(randomIndex).hasClass("partial_table")
+      );
 
       const playerName = allRows
         .eq(randomIndex)
